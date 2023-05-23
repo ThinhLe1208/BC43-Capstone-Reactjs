@@ -1,7 +1,6 @@
 import axios from "axios";
 
 import { ACCESS_TOKEN, DOMAIN } from "utils/constants/settingSystem";
-import { history } from "utils/history";
 import { storage } from "utils/storage";
 
 export const http = axios.create({
@@ -11,7 +10,7 @@ export const http = axios.create({
 
 http.interceptors.request.use(
     (config) => {
-        config.headers['Authorization'] = 'Bearer ' + JSON.parse(storage.getStore(ACCESS_TOKEN));
+        config.headers['Authorization'] = 'Bearer ' + storage.getStorageJson(ACCESS_TOKEN);
         return config;
     },
     (err) => {
@@ -25,10 +24,10 @@ http.interceptors.response.use(
     },
     (error) => {
         if (error.response?.status === 400 || error.response?.status === 404) {
-            history.push('/index');
+            console.log('interceptors response 400/404', error);
         }
         if (error.response?.status === 401 || error.response?.status === 403) {
-            history.push('/login');
+            console.log('interceptors response 401/403', error);
         }
         return Promise.reject(error);
     }
