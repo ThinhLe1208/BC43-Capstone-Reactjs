@@ -1,7 +1,7 @@
-import HomeTemplate from 'templates/HomeTemplate';
 import { unstable_HistoryRouter as HistoryRouter, Route, Routes } from 'react-router-dom';
 
 import { history } from 'utils/history';
+import HomeTemplate from 'templates/HomeTemplate';
 import Index from 'pages/Index';
 import Detail from 'pages/Detail';
 import Login from 'pages/Login';

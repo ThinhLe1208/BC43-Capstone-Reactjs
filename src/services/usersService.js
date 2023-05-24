@@ -8,7 +8,6 @@ class UsersService {
     getProfile = () => http.post('/api/Users/getProfile');
 
     updateProfile = (payload) => http.post('/api/Users/updateProfile', payload);
-
 }
 
 export const usersService = new UsersService();
