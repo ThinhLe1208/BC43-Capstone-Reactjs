@@ -1,12 +1,15 @@
-import React from 'react';
+import React from "react";
 
-import styles from './styles.module.scss';
-import SignUpForm from 'components/SignUpForm';
+import styles from "./styles.module.scss";
+import SignUpForm from "components/SignUpFormA";
 
 const Register = () => {
   return (
     <div className={styles.wrapper}>
-      <SignUpForm />
+      <h1>Create Account</h1>
+      <div className={styles.container}>
+        <SignUpForm />
+      </div>
     </div>
   );
 };
