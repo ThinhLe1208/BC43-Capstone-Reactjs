@@ -1,0 +1,105 @@
+.wrapper {
+  position: fixed;
+  inset: 0 0 auto 0;
+  background-color: var(--bg-color);
+  padding: 24px 0;
+  transition: all linear var(--transition-short);
+  z-index: 999;
+
+  &.fixed {
+    padding: 18px 0;
+    background-color: var(--bg-color);
+    box-shadow: var(--box-shadow-1);
+
+    .nav ul a {
+      color: var(--color-text-base);
+    }
+
+    .icons {
+      .icon {
+        color: var(--color-text-base);
+      }
+    }
+  }
+
+  .logo {
+    width: 60px;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .active {
+      color: var(--color-primary) !important;
+
+      &::after {
+        width: 100%;
+      }
+    }
+
+    ul {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      a {
+        position: relative;
+        color: var(--color-text-base);
+        font-size: var(--font-size-md);
+        font-weight: 600;
+        margin: 0px 15px;
+        padding: 12px 0px;
+        text-align: center;
+        text-transform: capitalize;
+        transition: all linear var(--transition-short);
+
+        &:hover {
+          color: var(--color-primary);
+        }
+
+        & + & {
+          margin-left: 15px;
+        }
+
+        &::after {
+          position: absolute;
+          content: '';
+          display: block;
+          width: 0;
+          height: 2px;
+          bottom: 2px;
+          left: 0;
+          background-color: var(--color-primary);
+          transition: all linear 0.3s;
+        }
+
+        &:hover::after {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .icons {
+    display: flex;
+    align-items: center;
+
+    .icon {
+      color: var(--color-text-base);
+      font-size: var(--font-size-xl);
+      cursor: pointer;
+      transition: all linear var(--transition-short);
+
+      &:hover {
+        color: var(--color-primary);
+      }
+    }
+
+    .icon + .icon {
+      margin-left: 20px;
+    }
+  }
+}

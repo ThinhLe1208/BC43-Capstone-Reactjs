@@ -1,0 +1,20 @@
+.userMenu {
+  .userItem {
+    color: var(--color-text-base);
+    padding: 0 10px;
+    transition: all linear 0.3s;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-primary);
+    }
+
+    p {
+      transform: translateY(1.2px);
+    }
+  }
+
+  .userItem + .userItem {
+    margin-top: 10px;
+  }
+}
