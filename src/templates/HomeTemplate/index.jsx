@@ -1,9 +1,9 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
+import React from "react";
+import { Outlet } from "react-router-dom";
 
-import styles from './styles.mudules.scss';
-import Footer from 'components/Footer';
-import Header from 'components/Header';
+import styles from "./styles.mudules.scss";
+import Footer from "components/FooterA";
+import Header from "components/Header";
 
 const HomeTemplate = () => {
   return (

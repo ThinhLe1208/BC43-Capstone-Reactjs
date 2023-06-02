@@ -1,0 +1,15 @@
+.wrapper {
+    .btn {
+        background-color: #cc0201; 
+        color: white;
+        border-radius: 10px;
+        border: none;   
+        letter-spacing: 0.5px;
+        transition: all .5s;
+        margin-bottom: 10px;
+        &:hover{
+            background-color: black;
+            transition: all .5s;
+        }
+    }
+}

@@ -1,0 +1,13 @@
+.wrapper {
+    margin-top: var(--padding-top-header);
+    h1 {
+        text-align: center;
+        margin-top: var(--font-family-base);
+        font-size: 35px;
+        font-weight: 400;
+    }
+   .container {
+    width: 50%;
+    margin: auto;
+   }
+}

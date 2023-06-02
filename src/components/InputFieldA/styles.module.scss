@@ -1,0 +1,46 @@
+.wrapper {
+  margin: 50px 0;
+  .login {
+    position: relative;
+    display: flex;
+    .label {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      pointer-events: none;
+      transition: 0.25s linear;
+      font-size: 12px;
+    }
+  
+    .input {
+      font-family: var(--font-family-base);
+      padding: 25px 10px 10px;
+      border: 1px solid #eee;
+      display: block;
+      width: 100%;
+      border-radius: 8px;
+      transition: border 0.25s linear;
+      background-color: transparent;
+      outline: none;
+      font-size: 12px;
+      &:focus {
+        border-color: gray;
+        &:focus + .label {
+          transform: translateY(-5px);
+          top: 10px;
+        }
+        &:not(:placeholder-shown) + .label{
+          transform: translateY(-5px);
+          top: 10px;
+        }
+      }
+      &:not(:placeholder-shown) + .label { 
+        transform: translateY(-5px);
+        top: 10px;}
+    }
+  }
+  .error {
+    margin-top: 5px;
+  }
+}

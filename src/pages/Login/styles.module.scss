@@ -1,0 +1,43 @@
+.wrapper {
+    padding-top: var(--padding-top-header);
+    .title {
+        font-weight: 600;
+        font-size: 38px;
+        text-align: center;
+        margin-bottom: 25px;
+    }
+    .content {
+        display: flex;
+        justify-content: space-between;
+            .changeSignUp {
+                width: 50%;
+                border: 1px solid #eee;
+                border-radius: 15px;
+                padding: 15px;
+                h1 {
+                    font-size: 20px;
+                }
+                p {
+                    font-weight: 100;
+                    margin: 15px 0;
+                }
+                
+            }
+            .signIn {
+                width: 50%;
+                border: 1px solid #eee;
+                border-radius: 15px;
+                margin-left: 35px;
+                padding: 15px;
+                h1 {
+                    font-size: 20px;
+                    font-weight: 400;
+                }
+                p {
+                    font-weight: 100;
+                    margin: 15px 0;
+                } 
+            }
+    }   
+
+}

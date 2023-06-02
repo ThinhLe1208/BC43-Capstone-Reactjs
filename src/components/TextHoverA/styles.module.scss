@@ -1,0 +1,12 @@
+.wrapper {
+    .textHover {
+        color: black;
+        font-weight: 400;
+        cursor: pointer;
+        transition: all 0.3s;
+        &:hover{
+            color: #cc0201;
+            transition: all 0.3s;
+        }
+    }
+}
