@@ -6,7 +6,7 @@ class ProductService {
         if (keyword) {
             url += `?keyword=${keyword}`;
         }
-        http.get(url);
+        return http.get(url);
     };
 
     getProductByCategory = (categoryId) => {
@@ -14,7 +14,7 @@ class ProductService {
         if (categoryId) {
             url += `?categoryId=${categoryId}`;
         }
-        http.get(url);
+        return http.get(url);
     };
 
     getProductByFeature = (feature) => {
@@ -22,7 +22,7 @@ class ProductService {
         if (feature) {
             url += `?feature=${feature}`;
         }
-        http.get(url);
+        return http.get(url);
     };
 
     getAllCategory = (keyword) => {
@@ -30,7 +30,7 @@ class ProductService {
         if (keyword) {
             url += `?keyword=${keyword}`;
         }
-        http.get(url);
+        return http.get(url);
     };
 
     getPaging = (pageIndex, pageSize, keywords) => {
@@ -38,7 +38,7 @@ class ProductService {
         if (keywords) {
             url += `&keywords=${keywords}`;
         }
-        http.get(url);
+        return http.get(url);
     };
 
     getProductById = (id) => {
@@ -46,7 +46,7 @@ class ProductService {
         if (id) {
             url += `?id=${id}`;
         }
-        http.get(url);
+        return http.get(url);
     };
 
     getAllStore = (keyword) => {
@@ -54,7 +54,7 @@ class ProductService {
         if (keyword) {
             url += `?keyword=${keyword}`;
         }
-        http.get(url);
+        return http.get(url);
     };
 }
 
