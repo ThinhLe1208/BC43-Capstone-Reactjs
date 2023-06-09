@@ -3,59 +3,79 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { productService } from "services/productService";
 
 class ProductThunk {
-    getProductByKeyword = createAsyncThunk(
-        'productAPI/getProductByKeyword',
-        async (keyword) => {
-            const response = await productService.getProductByKeyword(keyword);
-            return response.data.content;
+    // return an object with a keyword and a result list (for an input of the Slider component)
+    getAllProductList = createAsyncThunk(
+        'product/getAllProductListAPI',
+        async () => {
+            const response = await productService.getAllProductList();
+            return response?.data?.content;
+        }
+    );
+
+    // return a result directly
+    searchProductName = createAsyncThunk(
+        'product/searchProductNameAPI',
+        async (keyword, { getState, requestId }) => {
+            const { isLoadingProduct, currentRequestIdProduct } = getState().product;
+            if (isLoadingProduct !== true || requestId !== currentRequestIdProduct) {
+                return;
+            }
+            const response = await productService.getAllProductList(keyword);
+            return response?.data?.content;
         }
     );
 
     getProductByCategory = createAsyncThunk(
-        'productAPI/getProductByCategory',
+        'product/getProductByCategoryAPI',
         async (categoryId) => {
             const response = await productService.getProductByCategory(categoryId);
-            return response.data.content;
+            return {
+                categoryId: categoryId,
+                newProductByCategoryList: response?.data?.content
+            };
         }
     );
 
     getProductByFeature = createAsyncThunk(
-        'productAPI/getProductByFeature',
+        'product/getProductByFeatureAPI',
         async (feature) => {
             const response = await productService.getProductByFeature(feature);
-            return response.data.content;
+            return {
+                feature: feature,
+                newProductByFeatureList: response?.data?.content
+            };
         }
     );
 
     getAllCategory = createAsyncThunk(
-        'productAPI/getAllCategory',
+        'product/getAllCategoryAPI',
         async (keyword) => {
             const response = await productService.getAllCategory(keyword);
-            return response.data.content;
+            return response?.data?.content;
         }
     );
 
     getPaging = createAsyncThunk(
-        'productAPI/getPaging',
+        'product/getPagingAPI',
         async ({ pageIndex, pageSize, keywords } = {}) => {
             const response = await productService.getPaging(pageIndex, pageSize, keywords);
-            return response.data.content;
+            return response?.data?.content;
         }
     );
 
     getProductById = createAsyncThunk(
-        'productAPI/getProductById',
+        'product/getProductByIdAPI',
         async (id) => {
             const response = await productService.getProductById(id);
-            return response.data.content;
+            return response?.data?.content;
         }
     );
 
     getAllStore = createAsyncThunk(
-        'productAPI/getAllStore',
+        'product/getAllStoreAPI',
         async (keyword) => {
             const response = await productService.getAllStore(keyword);
-            return response.data.content;
+            return response?.data?.content;
         }
     );
 }

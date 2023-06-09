@@ -1,5 +1,4 @@
 .wrapper {
-  margin: 50px 0;
   .login {
     position: relative;
     display: flex;
@@ -12,7 +11,7 @@
       transition: 0.25s linear;
       font-size: 12px;
     }
-  
+
     .input {
       font-family: var(--font-family-base);
       padding: 25px 10px 10px;
@@ -30,14 +29,15 @@
           transform: translateY(-5px);
           top: 10px;
         }
-        &:not(:placeholder-shown) + .label{
+        &:not(:placeholder-shown) + .label {
           transform: translateY(-5px);
           top: 10px;
         }
       }
-      &:not(:placeholder-shown) + .label { 
+      &:not(:placeholder-shown) + .label {
         transform: translateY(-5px);
-        top: 10px;}
+        top: 10px;
+      }
     }
   }
   .error {

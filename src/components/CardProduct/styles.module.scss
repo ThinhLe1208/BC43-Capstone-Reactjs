@@ -1,20 +1,29 @@
+@use '../../assets/sass/mixin.scss';
+
 .wrapper {
+  --padding-x: 16px;
+
   position: relative;
+  background-color: var(--color-primary);
   border-radius: 16px;
-  border: 1.6px solid rgba(18, 18, 18, 0.1);
-  padding: 16px;
+  border: 1.6px solid var(--border-color);
+  padding: var(--padding-x);
   transition: all ease 0.3s;
 
   &:hover {
     box-shadow: var(--box-shadow-3);
-    padding-bottom: 66px;
-    margin-bottom: -66px;
+    padding-bottom: 58px;
+    margin-bottom: -55px;
 
     .footer {
       display: flex;
     }
 
     .header {
+      .saleTag {
+        transform: scale(1.2);
+        box-shadow: var(--box-shadow-1);
+      }
       .detailBtn {
         display: block;
       }
@@ -37,18 +46,59 @@
       z-index: 100;
 
       .saleTag {
-        color: var(--white);
-        background-color: var(--color-primary);
-        padding: 6px 10px 4px;
-        border-radius: var(--border-rad-sm);
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        background-color: var(--color-cta);
+        color: var(--color-text-secondary);
+        line-height: 1.2;
+        transition: all linear var(--transition-short);
+
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 100%;
+          right: 0;
+          left: 0;
+          border-width: 0 24px 6px;
+          border-style: solid;
+          border-color: transparent var(--color-cta) transparent var(--color-cta);
+        }
+      }
+
+      .likeBtn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--color-cta);
+        border-color: var(--border-color) !important;
+      }
+
+      .lordIcon {
+        @extend %lordIcon;
+        --lord-icon-primary: var(--color-secondary);
+
+        &.isLike {
+          --lord-icon-primary: var(--color-text-secondary);
+        }
       }
     }
 
-    .image {
-      object-position: center;
-      transform: scale(0.9);
-      transition: all ease 0.3s;
-      user-select: none;
+    .imageContainer {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+
+      .image {
+        object-position: center;
+        transform: scale(0.9);
+        transition: all ease 0.3s;
+        user-select: none;
+      }
     }
 
     .detailBtn {
@@ -65,12 +115,17 @@
   .body {
     .name {
       font-size: var(--font-size-md);
+      color: var(--color-text-base);
       margin-bottom: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     p {
       font-size: var(--font-size-lg);
-      color: var(--color-primary);
+      color: var(--color-secondary);
+      color: var(--color-text-secondary);
       margin-bottom: 10px;
     }
 
@@ -80,7 +135,7 @@
       align-items: baseline;
 
       .mainPrice {
-        color: var(--color-primary);
+        color: var(--color-secondary);
         font-size: var(--font-size-lg);
       }
 
@@ -94,14 +149,18 @@
   }
 
   .footer {
+    width: calc(100% - var(--padding-x) * 2);
     display: none;
     position: absolute;
     bottom: 16px;
-
-    // button + button {
-    //   margin-left: 16px;
-    // }
   }
+}
+
+.imageSkeleton {
+  width: 100% !important;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  margin-bottom: 8px;
 }
 
 @keyframes showDetailBtn {
@@ -110,5 +169,23 @@
   }
   to {
     transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .wrapper {
+    .header {
+      .top {
+        .saleTag {
+          font-size: var(--font-size-sm);
+          width: 40px;
+          height: 40px;
+
+          &::after {
+            border-width: 0 20px 4px;
+          }
+        }
+      }
+    }
   }
 }

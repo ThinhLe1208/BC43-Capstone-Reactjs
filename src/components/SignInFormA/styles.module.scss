@@ -1,9 +1,13 @@
 .wrapper {
-    form {
-        .flex {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+  form {
+    .input {
+      margin-bottom: 20px;
     }
+
+    .flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
 }

@@ -1,27 +1,32 @@
+@use '../../assets/sass/mixin.scss';
+
 .wrapper {
-  padding-top: var(--padding-top-header);
-  background-color: var(--bg-color);
+  background-color: var(--color-primary);
 
   .heading {
-    color: var(--color-primary);
+    color: var(--color-secondary);
     font-size: var(--font-size-xxl);
     font-weight: 700;
-    margin-bottom: var(--margin-md);
+    margin-bottom: var(--space-md);
   }
 
   .infoCell {
+    .imageInfo {
+      display: none;
+    }
+
     .name {
       display: block;
-      color: var(--color-primary);
+      color: var(--color-secondary);
       font-size: var(--font-size-lg);
       font-weight: 600;
-      margin-bottom: var(--margin-sm);
+      margin-bottom: var(--space-sm);
     }
 
     .info {
       color: var(--color-text-base);
       font-size: var(--font-size-md);
-      margin-bottom: var(--margin-sm);
+      margin-bottom: var(--space-sm);
 
       span {
         color: var(--color-text-sub);
@@ -32,22 +37,21 @@
       font-size: var(--font-size-lg);
       font-weight: 600;
     }
+
+    .quantityInfoCell {
+      display: none;
+    }
   }
 
   .quantityCell {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
 
-    .trahsIcon {
+    .lordIcon {
+      @extend %lordIcon;
       margin-left: 20px;
-      transition: all linear var(--transition-short);
-      cursor: pointer;
-
-      &:hover {
-        color: var(--color-primary);
-      }
     }
   }
 
@@ -60,7 +64,7 @@
     text-align: end;
 
     .price {
-      margin-bottom: var(--margin-md);
+      margin-bottom: var(--space-md);
 
       span:first-child {
         font-size: var(--font-size-md);
@@ -75,11 +79,44 @@
     .subInfo {
       color: var(--color-text-sub);
       font-size: var(--font-size-sm);
-      margin-bottom: var(--margin-lg);
+      margin-bottom: var(--space-lg);
     }
 
     button + button {
-      margin-top: var(--margin-md);
+      margin-top: var(--space-md);
+    }
+  }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 1200px) {
+  .wrapper {
+    .tableFooter {
+      width: 50%;
+      margin-left: auto;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .wrapper {
+    .infoCell {
+      .quantityInfoCell {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 8px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .wrapper {
+    .infoCell {
+      .imageInfo {
+        display: block;
+        width: 80%;
+      }
     }
   }
 }

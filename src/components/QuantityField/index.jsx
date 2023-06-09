@@ -1,56 +1,79 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import styles from './styles.module.scss';
-import { changeQuantity, decreaseQuantity } from 'redux/slices/cartSlice';
-import { increaseQuantity } from 'redux/slices/cartSlice';
+import { changeQuantityByButton, changeQuantityByInput } from 'redux/slices/cartSlice';
+import LordIcon from 'components/LordIcon';
 
-const QuantityField = ({ product }) => {
+const QuantityField = ({ product, large }) => {
   const dispatch = useDispatch();
 
   const handleDecreaseQuantity = () => {
-    dispatch(decreaseQuantity(product?.id));
+    dispatch(
+      changeQuantityByButton({
+        productId: product?.id,
+        qty: -1,
+      })
+    );
   };
 
   const handleIncreaseQuantity = () => {
-    dispatch(increaseQuantity(product?.id));
+    dispatch(
+      changeQuantityByButton({
+        productId: product?.id,
+        qty: 1,
+      })
+    );
   };
 
   const handleChangeQuantity = (e) => {
     dispatch(
-      changeQuantity({
-        id: product?.id,
+      changeQuantityByInput({
+        productId: product?.id,
         qty: Number(e.target.value),
       })
     );
   };
 
   const handleBlurQuantity = (e) => {
-    let qty = e.target.value;
+    let qty = Number(e.target.value);
     if (qty < 1) {
       qty = 1;
     }
     dispatch(
-      changeQuantity({
-        id: product?.id,
+      changeQuantityByInput({
+        productId: product?.id,
         qty: Math.floor(qty),
       })
     );
   };
 
   return (
-    <div className={styles.wrapper}>
-      <MinusOutlined onClick={handleDecreaseQuantity} />
+    <div className={styles.wrapper + ' ' + (large && styles.large)}>
+      <LordIcon
+        icon='arrowDown'
+        className='lordIcon'
+        state='hover-1'
+        trigger='click'
+        size={large ? '160px' : '140px'}
+        onClick={handleDecreaseQuantity}
+      />
       <input
         type='number'
-        value={product?.qty}
+        value={product?.qty ?? 1}
         onInput={handleChangeQuantity}
         onBlur={handleBlurQuantity}
         min={1}
         step={1}
       />
-      <PlusOutlined onClick={handleIncreaseQuantity} />
+      <LordIcon
+        icon='arrowUp'
+        className='lordIcon'
+        state='hover-1'
+        trigger='click'
+        size={large ? '160px' : '140px'}
+        onClick={handleIncreaseQuantity}
+      />
     </div>
   );
 };

@@ -5,7 +5,20 @@
   max-width: 70px;
   border: 1px solid var(--border-color);
   border-radius: var(--border-rad-sm);
-  padding: 4px 6px;
+  padding: 0 6px;
+
+  &.large {
+    max-width: 100px;
+    padding: 6px 12px;
+
+    span {
+      font-size: 14px;
+    }
+
+    input {
+      font-size: 18px;
+    }
+  }
 
   span {
     font-size: 10px;
@@ -18,7 +31,7 @@
     display: inline-block;
     min-width: 20px;
     border: none;
-    background-color: var(--white);
+    background-color: var(--color-primary);
     background-clip: padding-box;
     padding: 0 8px;
     margin-bottom: -2px;

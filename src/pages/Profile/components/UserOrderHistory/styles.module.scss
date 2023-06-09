@@ -1,0 +1,42 @@
+@use '../../../../assets//sass/mixin.scss';
+
+.wrapper {
+  .productCell {
+    .nameProduct {
+      display: none;
+      color: var(--color-cta);
+      font-weight: 700;
+      text-align: center;
+    }
+  }
+
+  .name {
+    color: var(--color-cta);
+    font-weight: 700;
+  }
+}
+
+.orderId {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.lordIcon {
+  @extend %lordIcon;
+}
+
+.lordWarningIcon {
+  --lord-icon-primary: var(--color-warning);
+}
+
+@media only screen and (max-width: 576px) {
+  .wrapper {
+    .productCell {
+      .nameProduct {
+        display: block;
+      }
+    }
+  }
+}

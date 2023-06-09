@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
-import { Badge, Button, Empty, Popover } from 'antd';
-import { ShoppingCartOutlined } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { Badge, Button, Empty, Popover, Space, Spin } from 'antd';
 
 import styles from './styles.module.scss';
-import { useSelector } from 'react-redux';
 import HeaderCartItem from 'components/HeaderCartItem';
-import { useNavigate } from 'react-router-dom';
+import LordIcon from 'components/LordIcon';
+import { notifications } from 'utils/notifications';
+import { usersThunk } from 'redux/thunks/usersThunk';
+import { clearCart } from 'redux/slices/cartSlice';
 
 const HeaderCartMenu = () => {
   const { cartList, totalPrice, totalQuantity } = useSelector((state) => state.cart);
+  const { isLoadingUsers } = useSelector((state) => state.users);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
   const handleViewCart = () => {
@@ -17,9 +22,15 @@ const HeaderCartMenu = () => {
     navigate('/cart');
   };
 
-  const handleCheckOut = () => {
+  const handleCheckOut = async () => {
+    try {
+      await dispatch(usersThunk.order()).unwrap();
+      dispatch(clearCart());
+      notifications.success('Check out successfully.');
+    } catch (err) {
+      notifications.error('Failed to check out.');
+    }
     setOpen(false);
-    navigate('/checkout');
   };
 
   const handleOpenChange = (newOpen) => {
@@ -29,7 +40,12 @@ const HeaderCartMenu = () => {
   const renderCartList = (list) => {
     if (Array.isArray(list)) {
       return cartList.map((item, index) => {
-        return <HeaderCartItem key={index} product={item} />;
+        return (
+          <HeaderCartItem
+            key={index}
+            product={item}
+          />
+        );
       });
     }
   };
@@ -59,11 +75,26 @@ const HeaderCartMenu = () => {
           <p className={styles.totalNumber}>${totalPrice}</p>
         </div>
         <div className={styles.buttons}>
-          <Button type='primary' block onClick={handleViewCart}>
+          <Button
+            type='primary'
+            block
+            onClick={handleViewCart}
+          >
             View Cart
           </Button>
-          <Button type='primary' block onClick={handleCheckOut}>
-            Check Out
+          <Button
+            type='primary'
+            block
+            disabled={isLoadingUsers}
+            onClick={handleCheckOut}
+          >
+            <Space>
+              Check Out
+              <Spin
+                spinning={isLoadingUsers}
+                style={{ color: '#fff' }}
+              />
+            </Space>
           </Button>
         </div>
       </div>
@@ -86,11 +117,16 @@ const HeaderCartMenu = () => {
           style={{
             lineHeight: '26px',
             boxShadow: '0 0 0 1.5px #fff',
+            color: 'var(--color-text-secondary )',
+            backgroundColor: 'var(--color-secondary)',
           }}
         >
-          <div>
-            <ShoppingCartOutlined style={{ fontSize: 'var(--font-size-xl)' }} />
-          </div>
+          <LordIcon
+            className='lordIcon'
+            icon='cart'
+            trigger='hover'
+            state='hover-1'
+          />
         </Badge>
       </Popover>
     </div>

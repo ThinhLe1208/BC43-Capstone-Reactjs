@@ -1,15 +1,13 @@
 import React from 'react';
 import { Col, Row } from 'antd';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { useDispatch } from 'react-redux';
 
 import styles from './styles.module.scss';
 import QuantityField from 'components/QuantityField';
 import { removeCart } from 'redux/slices/cartSlice';
+import LordIcon from 'components/LordIcon';
 
 const HeaderCartItem = ({ product }) => {
-  console.log('HeaderCartItem ~ product:', product);
   const dispatch = useDispatch();
 
   const handleDeleteProduct = () => {
@@ -33,16 +31,19 @@ const HeaderCartItem = ({ product }) => {
         <Col span={18}>
           <div className={styles.heading}>
             <p className={styles.name}>{product?.name}</p>
-            <FontAwesomeIcon
-              icon={faTrashCan}
+            <LordIcon
+              icon='trash'
+              className={styles.lordIcon}
+              size='20px'
+              state='hover-empty'
               onClick={handleDeleteProduct}
             />
           </div>
           <p className={styles.info}>
-            <span>Size:</span> 32
+            <span>Size:</span> 36
           </p>
           <p className={styles.info}>
-            <span>Color:</span> black
+            <span>Color:</span> Black
           </p>
 
           <Row

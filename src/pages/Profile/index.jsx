@@ -1,28 +1,49 @@
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './styles.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
 import { usersThunk } from 'redux/thunks/usersThunk';
+import { storage } from 'utils/storage';
+import Container from 'components/Container';
+import Breadcrumb from 'components/Breadcrumb';
+import UserInfo from './components/UserInfo';
+import UserOrderHistory from './components/UserOrderHistory';
+import UserFavorite from './components/UserFavorite';
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const userProfile = useSelector((state) => state.users.userProfile);
-  console.log('Profile ~ userProfile:', userProfile);
+  const { userProfile, isLoadingUsers } = useSelector((state) => state.users);
+
+  const breadCrumbList = [{ href: '/', title: 'Home' }, { title: 'Profile' }];
 
   useEffect(() => {
     dispatch(usersThunk.getProfile());
+    dispatch(usersThunk.getProductfavorite());
   }, [dispatch]);
 
   return (
-    <>
-      <img
-        src={userProfile?.avatar}
-        alt='avatar'
-        style={{ width: '200px' }}
-      />
-      <p>Name : {userProfile?.name}</p>
-      <p>Email : {userProfile?.email}</p>
-    </>
+    storage.checkLogin() && (
+      <div className={styles.wrapper}>
+        <Container>
+          <Breadcrumb breadCrumbList={breadCrumbList} />
+
+          <div className={styles.userInfo}>
+            <UserInfo
+              userProfile={userProfile}
+              isLoading={isLoadingUsers}
+            />
+          </div>
+          <div className={styles.userFavorite}>
+            <h3 className={styles.title}>Favorite Shoes</h3>
+            <UserFavorite />
+          </div>
+          <div className={styles.userOrders}>
+            <h3 className={styles.title}>Orders History</h3>
+            <UserOrderHistory userProfile={userProfile} />
+          </div>
+        </Container>
+      </div>
+    )
   );
 };
 

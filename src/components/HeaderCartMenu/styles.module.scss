@@ -1,6 +1,8 @@
+@use '../../assets/sass/mixin.scss';
+
 .emptyContent,
 .filledContent {
-  width: 378px;
+  width: 100%;
   padding: 4px;
 }
 
@@ -11,13 +13,21 @@
 }
 
 .filledContent {
+  max-height: 540px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+
   .body {
-    max-height: 332px;
+    flex: 1 1 auto;
     overflow-y: auto;
     border-bottom: 1px solid var(--border-color);
   }
 
   .footer {
+    flex: 0 1 auto;
+
     .total {
       display: flex;
       justify-content: space-between;
@@ -26,10 +36,12 @@
       margin-bottom: 16px;
 
       .totalText {
+        color: var(--color-text-base);
         font-size: var(--font-size-md);
       }
 
       .totalNumber {
+        color: var(--color-text-base);
         font-size: var(--font-size-xl);
         font-weight: 600;
       }
@@ -41,5 +53,19 @@
       align-items: center;
       column-gap: 10px;
     }
+  }
+}
+
+@media only screen and (max-height: 576px) {
+  .filledContent {
+    max-height: calc(100vh - 88px);
+    position: fixed;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .filledContent {
+    height: calc(100vh - 88px);
+    max-height: none;
   }
 }

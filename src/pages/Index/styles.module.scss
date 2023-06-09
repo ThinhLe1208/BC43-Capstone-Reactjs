@@ -1,7 +1,31 @@
 .wrapper {
-  background-color: var(--bg-color);
+  --space-bottom: 0px;
+  background-color: var(--color-primary);
 
-  .container {
-    padding-top: var(--padding-1);
+  .carousel {
+    margin-bottom: calc(var(--space-bottom) + 60px);
+  }
+
+  .slider {
+    margin-bottom: var(--space-bottom);
+  }
+
+  .banner1 {
+    margin-bottom: calc(var(--space-bottom) + 60px);
+    max-height: 400px;
+  }
+  .banner1,
+  .banner2,
+  .banner3 {
+    margin-bottom: calc(var(--space-bottom) + 60px);
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .wrapper {
+    .banner1 {
+      max-height: none;
+      margin-bottom: 0;
+    }
   }
 }

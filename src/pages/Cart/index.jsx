@@ -1,25 +1,51 @@
-import React from 'react';
-import { Button, Col, Row, Table } from 'antd';
+import React, { useEffect } from 'react';
+import { Button, Col, Row, Space, Spin, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 import styles from './styles.module.scss';
 import Container from 'components/Container';
 import Breadcrumb from 'components/Breadcrumb';
 import QuantityField from 'components/QuantityField';
-import { removeCart } from 'redux/slices/cartSlice';
+import { clearCart, removeCart } from 'redux/slices/cartSlice';
+import { storage } from 'utils/storage';
+import { history } from 'utils/history';
+import { notifications } from 'utils/notifications';
+import LordIcon from 'components/LordIcon';
+import { usersThunk } from 'redux/thunks/usersThunk';
 
 const Cart = () => {
   const { cartList, totalPrice } = useSelector((state) => state.cart);
+  const { isLoadingUsers } = useSelector((state) => state.users);
   const navigate = useNavigate();
-  const breadCrumbList = [{ href: '/', title: 'Home' }, { title: 'Cart' }];
-
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const isLogin = storage.checkLogin();
+    if (!isLogin) {
+      notifications.error('You must log in first.');
+      history.push('/login');
+    }
+  }, []);
+
+  const breadCrumbList = [{ href: '/', title: 'Home' }, { title: 'Cart' }];
 
   const handleDeleteProduct = (id) => {
     dispatch(removeCart(id));
+  };
+
+  const handleCheckOut = async () => {
+    if (cartList.length < 1) {
+      notifications.warning('Your cart is empty.');
+    } else {
+      try {
+        await dispatch(usersThunk.order()).unwrap();
+        dispatch(clearCart());
+        notifications.success('Check out successfully.');
+      } catch (err) {
+        notifications.error('Failed to check out.');
+      }
+    }
   };
 
   const columns = [
@@ -27,9 +53,16 @@ const Cart = () => {
       title: 'PRODUCT',
       dataIndex: 'product',
       key: 'product',
+      align: 'center',
+      responsive: ['sm'],
       width: 160,
       render: (data) => {
-        return <img src={data?.image} alt='img' />;
+        return (
+          <img
+            src={data?.image}
+            alt='img'
+          />
+        );
       },
     },
     {
@@ -39,7 +72,15 @@ const Cart = () => {
       render: (data) => {
         return (
           <div className={styles.infoCell}>
-            <Link className={styles.name} to={`/detail/${data?.id}`}>
+            <img
+              className={styles.imageInfo}
+              src={data?.image}
+              alt='img'
+            />
+            <Link
+              className={styles.name}
+              to={`/detail/${data?.id}`}
+            >
               {data?.name}
             </Link>
             <p className={styles.info}>
@@ -49,6 +90,20 @@ const Cart = () => {
               <span>Color:</span> black
             </p>
             <p className={styles.price}>${data?.price}</p>
+
+            <div className={styles.quantityInfoCell}>
+              <QuantityField
+                product={data}
+                large
+              />
+              <LordIcon
+                icon='trash'
+                className='lordIcon'
+                size='24px'
+                state='hover-empty'
+                onClick={() => handleDeleteProduct(data?.id)}
+              />
+            </div>
           </div>
         );
       },
@@ -57,13 +112,21 @@ const Cart = () => {
       title: 'QUANTITY',
       dataIndex: 'quantity',
       key: 'quantity',
+      align: 'center',
+      width: '20%',
+      responsive: ['md'],
       render: (data) => {
         return (
           <div className={styles.quantityCell}>
-            <QuantityField product={data} />
-            <FontAwesomeIcon
-              className={styles.trahsIcon}
-              icon={faTrashCan}
+            <QuantityField
+              product={data}
+              large
+            />
+            <LordIcon
+              icon='trash'
+              className={styles.lordIcon}
+              size='24px'
+              state='hover-empty'
               onClick={() => handleDeleteProduct(data?.id)}
             />
           </div>
@@ -75,6 +138,7 @@ const Cart = () => {
       dataIndex: 'total',
       key: 'total',
       align: 'right',
+      width: '24%',
       render: (data) => {
         return <p className={styles.subPrice}>${(data?.qty * data?.price).toLocaleString()}</p>;
       },
@@ -90,38 +154,64 @@ const Cart = () => {
   }));
 
   return (
-    <div className={styles.wrapper}>
-      <Container>
-        <Breadcrumb breadCrumbList={breadCrumbList} />
-        <h3 className={styles.heading}>Your Cart</h3>
+    storage.checkLogin() && (
+      <div className={styles.wrapper}>
+        <Container>
+          <Breadcrumb breadCrumbList={breadCrumbList} />
+          <h3 className={styles.heading}>Your Cart</h3>
 
-        <Row align={'top'} gutter={16}>
-          <Col span={18}>
-            <Table
-              columns={columns}
-              dataSource={data}
-              rowKey={'key'}
-              pagination={{ position: ['bottomRight'], defaultPageSize: 4 }}
-            />
-          </Col>
-          <Col span={6}>
-            <div className={styles.tableFooter}>
-              <p className={styles.price}>
-                <span>Subtotal :</span>
-                <span>${totalPrice}</span>
-              </p>
-              <p className={styles.subInfo}>Taxes and shipping calculated at checkout</p>
-              <Button type='primary' block onClick={() => navigate('/')}>
-                Continue Shopping
-              </Button>
-              <Button type='primary' block onClick={() => navigate('/checkout')}>
-                Check Out
-              </Button>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+          <Row
+            align={'top'}
+            gutter={[32, 32]}
+          >
+            <Col
+              span={24}
+              xl={18}
+            >
+              <Table
+                columns={columns}
+                dataSource={data}
+                rowKey={'key'}
+                pagination={{ position: ['bottomLeft'], defaultPageSize: 4 }}
+              />
+            </Col>
+            <Col
+              span={24}
+              xl={6}
+            >
+              <div className={styles.tableFooter}>
+                <p className={styles.price}>
+                  <span>Subtotal :</span>
+                  <span>${totalPrice}</span>
+                </p>
+                <p className={styles.subInfo}>Taxes and shipping calculated at checkout</p>
+                <Button
+                  type='primary'
+                  block
+                  onClick={() => navigate('/')}
+                >
+                  Continue Shopping
+                </Button>
+                <Button
+                  type='primary'
+                  block
+                  disabled={isLoadingUsers}
+                  onClick={handleCheckOut}
+                >
+                  <Space>
+                    Check Out
+                    <Spin
+                      spinning={isLoadingUsers}
+                      style={{ color: '#fff' }}
+                    />
+                  </Space>
+                </Button>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    )
   );
 };
 

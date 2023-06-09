@@ -1,8 +1,8 @@
 import axios from "axios";
-import jwt_decode from 'jwt-decode';
 
-import { ACCESS_TOKEN, DOMAIN, USER_LOGIN } from "utils/constants/settingSystem";
+import { ACCESS_TOKEN, DOMAIN } from "utils/constants/settingSystem";
 import { history } from "utils/history";
+import { notifications } from "utils/notifications";
 import { storage } from "utils/storage";
 
 export const http = axios.create({
@@ -12,45 +12,36 @@ export const http = axios.create({
 
 http.interceptors.request.use(
     (config) => {
-        config.headers['Authorization'] = 'Bearer ' + storage.getStorageJson(ACCESS_TOKEN);
+        const isLogin = storage.checkLogin();
+        if (isLogin) {
+            config.headers['Authorization'] = 'Bearer ' + storage.getStorageJson(ACCESS_TOKEN);
+        }
         return config;
     },
     (err) => {
+        notifications.error('Failed to request.');
         return Promise.reject(err);
     }
 );
 
 http.interceptors.response.use(
     (response) => {
-        console.log("response:", response);
-
         return response;
     },
     (error) => {
-        console.log('error', error);
-        if (error.response?.status === 401 || error.response?.status === 403) {
-            console.log(2);
-            //Đã đăng nhập nhưng hết hạn (gọi api refresh token)
-            let decodedToken = jwt_decode(storage.getStoreJson(ACCESS_TOKEN));
-            console.log('Decoded Token', decodedToken);
-            let currentDate = new Date();
-
-            // JWT exp is in seconds
-            if (decodedToken.exp * 1000 < currentDate.getTime()) {
-                console.log('Token expired.');
-                //Remove userlogin trong localstorage
-                localStorage.removeItem(USER_LOGIN);
-                localStorage.removeItem(ACCESS_TOKEN);
-                //Chuyển hướng về đăng nhập
+        if (error?.response?.status === 401 || error?.response?.status === 403) {
+            const isLogin = storage.checkLogin();
+            if (!isLogin) {
+                notifications.error('You must log in first.', { toastId: 'login request' });
                 history.push('/login');
             }
-
-            //Chưa đăng nhập
-            alert('Đăng nhập để vào trang này !');
-            history.push('/login');
         }
         if (error.response?.status === 400 || error.response?.status === 404) {
-            console.log('interceptors response 400/404', error);
+            if (error?.response?.data?.message === 'Email đã được sử dụng!') {
+                notifications.error('The email has already been taken.', { toastId: 'duplicated email' });
+            } else {
+                notifications.error('The data was not found.', { toastId: '400/404' });
+            }
         }
         return Promise.reject(error);
     }

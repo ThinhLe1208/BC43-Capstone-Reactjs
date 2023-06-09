@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 import usersReducer from './slices/usersSlice';
 import productReducer from './slices/productSlice';
 import cartReducer from './slices/cartSlice';
+import uiReducer from './slices/uiSlice';
 
 const rootPersistConfig = {
     key: 'root',
@@ -18,10 +19,27 @@ const rootPersistConfig = {
     blacklist: ['users', 'product'],
 };
 
+const usersPersistConfig = {
+    key: 'users',
+    storage,
+    stateReconciler: autoMergeLevel2,
+    // persist
+    whitelist: ['favoriteList'],
+};
+
+const uiPersistConfig = {
+    key: 'ui',
+    storage,
+    stateReconciler: autoMergeLevel2,
+    // persist
+    whitelist: ['theme'],
+};
+
 const rootReducer = combineReducers({
-    users: usersReducer,
+    users: persistReducer(usersPersistConfig, usersReducer),
     product: productReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    ui: persistReducer(uiPersistConfig, uiReducer),
 });
 
 const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
