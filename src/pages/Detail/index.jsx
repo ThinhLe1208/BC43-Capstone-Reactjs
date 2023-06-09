@@ -5,7 +5,7 @@ import { productThunk } from 'redux/thunks/productThunk';
 import { Col, Divider, Row } from 'antd';
 
 import styles from './styles.module.scss';
-import Info from './components/Info';
+import Info from './components/InfoA';
 import Slider from 'components/Slider';
 import SliderDetail from './components/SliderDetail';
 import Container from 'components/Container';
