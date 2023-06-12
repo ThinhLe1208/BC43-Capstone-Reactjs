@@ -66,7 +66,7 @@ const Carousel = () => {
               <div className={styles.imgWrapper + ' ' + styles.rightToLeft}>
                 <div className={styles.bounce}>
                   <img
-                    src={require('../../assets/images/zoomx-vaporfly-next-running-shoe-4Q5jfG.png')}
+                    src={require('../../assets/images/zoomx-vaporfly-next-running-shoe-4Q5jfG.webp')}
                     alt='placeholder'
                   />
                 </div>
@@ -77,25 +77,25 @@ const Carousel = () => {
             <div className={styles.moreImages}>
               <div className={styles.moreImagesItem + ' ' + styles.bottomUp}>
                 <img
-                  src={require('../../assets/images/zoomx-vaporfly-next-running-shoe-4Q5jfG-1.jpg')}
+                  src={require('../../assets/images/zoomx-vaporfly-next-running-shoe-4Q5jfG-1.webp')}
                   alt='placeholder'
                 />
               </div>
               <div className={styles.moreImagesItem + ' ' + styles.bottomUp}>
                 <img
-                  src={require('../../assets/images/zoomx-vaporfly-next-running-shoe-4Q5jfG (1).jpg')}
+                  src={require('../../assets/images/zoomx-vaporfly-next-running-shoe-4Q5jfG (1).webp')}
                   alt='placeholder'
                 />
               </div>
               <div className={styles.moreImagesItem + ' ' + styles.bottomUp}>
                 <img
-                  src={require('../../assets/images/zoomx-vaporfly-next-running-shoe-4Q5jfG (3).jpg')}
+                  src={require('../../assets/images/zoomx-vaporfly-next-running-shoe-4Q5jfG (3).webp')}
                   alt='placeholder'
                 />
               </div>
               <div className={styles.moreImagesItem + ' ' + styles.bottomUp}>
                 <img
-                  src={require('../../assets/images/zoomx-vaporfly-next-running-shoe-4Q5jfG (4).jpg')}
+                  src={require('../../assets/images/zoomx-vaporfly-next-running-shoe-4Q5jfG (4).webp')}
                   alt='placeholder'
                 />
               </div>
@@ -108,20 +108,26 @@ const Carousel = () => {
         {/* SLIDE CONTROL */}
         <div className={styles.slideControl}>
           <div className='slideControlItem'>
-            <img src={require('../../assets/images/zoomx-vaporfly-next-running-shoe-4Q5jfG.png')} alt='placeholder' />
-          </div>
-          <div className='slideControlItem'>
-            <img src={require('../../assets/images/zoom-fly-3-mens-running-shoe-XhzpPH.png')} alt='placeholder' />
-          </div>
-          <div className='slideControlItem'>
             <img
-              src={require('../../assets/images/air-max-alpha-tr-3-mens-training-shoe-0C1CV7.png')}
+              src={require('../../assets/images/zoomx-vaporfly-next-running-shoe-4Q5jfG.webp')}
               alt='placeholder'
             />
           </div>
           <div className='slideControlItem'>
             <img
-              src={require('../../assets/images/air-zoom-superrep-mens-hiit-class-shoe-ZWLnJW (1).png')}
+              src={require('../../assets/images/zoom-fly-3-mens-running-shoe-XhzpPH.webp')}
+              alt='placeholder'
+            />
+          </div>
+          <div className='slideControlItem'>
+            <img
+              src={require('../../assets/images/air-max-alpha-tr-3-mens-training-shoe-0C1CV7.webp')}
+              alt='placeholder'
+            />
+          </div>
+          <div className='slideControlItem'>
+            <img
+              src={require('../../assets/images/air-zoom-superrep-mens-hiit-class-shoe-ZWLnJW (1).webp')}
               alt='placeholder'
             />
           </div>

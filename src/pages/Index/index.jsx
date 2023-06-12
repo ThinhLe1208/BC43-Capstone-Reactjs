@@ -66,7 +66,7 @@ const Index = () => {
               <Banner
                 className={styles.image}
                 position='right'
-                image='banner_1.png'
+                image='banner_1.webp'
                 subTitle='THE BEST COLLECTIONS'
                 title='Leather Shoes Collection'
                 content='30% Off Sale'
@@ -105,7 +105,7 @@ const Index = () => {
         <div className={styles.banner2}>
           <Banner
             position='middle'
-            image='banner_2.png'
+            image='banner_2.webp'
             subTitle='THE BEST COLLECTIONS'
             title='Best Collection Of Different Types Of Shoes'
             buttonContent='Discover More'
@@ -135,7 +135,7 @@ const Index = () => {
               lg={15}
             >
               <BannerVideo
-                image='banner_3.png'
+                image='banner_3.webp'
                 height='300px'
               />
             </Col>
@@ -145,7 +145,7 @@ const Index = () => {
             >
               <Banner
                 position='left'
-                image='banner_4.png'
+                image='banner_4.webp'
                 subTitle='THE BEST COLLECTIONS'
                 title='The Best Offers'
                 buttonContent='Shop Now'
